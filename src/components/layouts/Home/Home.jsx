@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <section>
       <article>
-        <Avatar onClick={avatarClickHandler} />
+        <Avatar onClick={avatarClickHandler} profileId="Abril" />
       </article>
     </section>
   );
