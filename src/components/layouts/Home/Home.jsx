@@ -1,3 +1,14 @@
+import Avatar from "../../Avatar/Avatar";
+
 export default function Home() {
-  return <p>This is Home page</p>;
+  const avatarClickHandler = () => {
+    console.log("Avatar has been clicked");
+  };
+  return (
+    <section>
+      <article>
+        <Avatar onClick={avatarClickHandler} />
+      </article>
+    </section>
+  );
 }
