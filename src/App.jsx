@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
-import Home from "./layouts/Home/Home";
-import DailyRecord from "./layouts/DailyRecord/DailyRecord";
+import Home from "./components/layouts/Home/Home";
+import DailyRecord from "./components/layouts/DailyRecord/DailyRecord";
 import { routes } from "./routes/routes";
 import "./App.css";
 

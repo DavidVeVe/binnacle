@@ -1,6 +1,6 @@
-import Home from "../layouts/Home/Home";
-import DailyRecord from "../layouts/DailyRecord/DailyRecord";
-import CashOut from "../layouts/Cashout/Cashout";
+import Home from "../components/layouts/Home/Home";
+import DailyRecord from "../components/layouts/DailyRecord/DailyRecord";
+import CashOut from "../components/layouts/Cashout/Cashout";
 
 export const routes = Object.freeze([
   {
