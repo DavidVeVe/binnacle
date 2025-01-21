@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
-import Avatar from "../../Avatar/Avatar";
-import Text from "../../Text";
+import Avatar from "../../components/Avatar/Avatar";
+import Text from "../../components/Text";
+import { getSingleProfile } from "../../requestHandlers/profiles";
 import "./home.scss";
+
+const SERVER_URL = "http://localhost:3000";
 
 export default function Home() {
   const [profiles, setProfiles] = useState([]);
-  const avatarClickHandler = () => {
-    console.log("Avatar has been clicked");
+
+  const avatarClickHandler = async (profileId) => {
+    await getSingleProfile(SERVER_URL, {
+      method: "GET",
+      body: JSON.stringify(profileId),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
   };
 
   useEffect(() => {
     const getProfiles = async () => {
-      const response = await fetch("http://localhost:3000");
+      const response = await fetch(SERVER_URL);
       const { data } = await response.json();
       setProfiles(data);
     };
@@ -22,7 +32,7 @@ export default function Home() {
   const AvatarComponents = profiles?.map(({ id, name }) => {
     return (
       <Avatar
-        onClick={avatarClickHandler}
+        onClick={() => avatarClickHandler(id)}
         profileId={id}
         textComponent={<Text element="span">{name}</Text>}
         key={id}
