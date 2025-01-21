@@ -25,6 +25,7 @@ export default function Home() {
         onClick={avatarClickHandler}
         profileId={id}
         textComponent={<Text element="span">{name}</Text>}
+        key={id}
       />
     );
   });
