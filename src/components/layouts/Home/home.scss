@@ -1,0 +1,13 @@
+
+
+.home {
+
+    &__hero {
+    }
+
+    &__profiles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
