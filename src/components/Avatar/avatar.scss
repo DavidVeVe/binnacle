@@ -3,6 +3,7 @@
     height: 55px;
     cursor: pointer;
     transition: .5s;
+    margin: 12px;
 
     &:hover {
         transform: scale(1.1);
@@ -18,5 +19,10 @@
             width: inherit;
             height: inherit;
         }
+    }
+
+    & .title {
+        color: white;
+        margin: 26px 0;
     }
 }
