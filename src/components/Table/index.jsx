@@ -1,3 +1,4 @@
-export default function Table() {
+export default function Table({ data }) {
+  const TableCreator = data;
   return <p>Table</p>;
 }
