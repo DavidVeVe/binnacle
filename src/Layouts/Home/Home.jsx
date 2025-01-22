@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Avatar from "../../components/Avatar/Avatar";
+import Avatar from "../../components/Avatar";
 import Text from "../../components/Text";
 import { SERVER_URL } from "../../common/constants/profile";
 import "./home.scss";
@@ -22,9 +22,11 @@ export default function Home() {
   }, []);
 
   const AvatarComponents = homeProfiles?.map(({ id, name }) => {
+    const avatarName = <Text element="span">{name}</Text>;
+
     return (
       <Link to={`/profile/${id}`} key={id}>
-        <Avatar textComponent={<Text element="span">{name}</Text>} />
+        <Avatar textComponent={avatarName} />
       </Link>
     );
   });

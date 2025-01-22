@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getSingleProfile } from "../../requestHandlers/profiles";
-import Table from "../../components/Table";
 import { SERVER_URL } from "../../common/constants/profile";
+import Table from "../../components/Table";
+import Text from "../../components/Text";
+import Avatar from "../../components/Avatar";
+import Button from "../../components/Button";
 
 const getProfileUrl = (id) => `${SERVER_URL}/profile/${id}`;
+
+const DAILY_RECORD_TEXT = "Estos son tus servicios de hoy:";
+const CASHOUT_TEXT = "Hacer corte";
+const NEW_SERVICE_TEXT = "Nuevo servicio";
 
 export default function DailyRecord() {
   const { profileId } = useParams();
@@ -18,5 +25,30 @@ export default function DailyRecord() {
     getData();
   }, []);
 
-  return <Table data={profileData?.currentServices || []} />;
+  const newServiceHandler = () => {
+    console.log("new service handler");
+  };
+
+  const cashoutHandler = () => {
+    console.log("cash out handler");
+  };
+
+  const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
+
+  return (
+    <section className="dailyrecord__container">
+      <Avatar textComponent={avatarName} />
+      <Text element="h1">{DAILY_RECORD_TEXT}</Text>
+      <Table data={profileData?.currentServices || []} />
+
+      <section className="dailyrecord__buttons">
+        <Button buttonType="button" onClick={newServiceHandler}>
+          {NEW_SERVICE_TEXT}
+        </Button>
+        <Button buttonType="button" onClick={cashoutHandler}>
+          {CASHOUT_TEXT}
+        </Button>
+      </section>
+    </section>
+  );
 }
