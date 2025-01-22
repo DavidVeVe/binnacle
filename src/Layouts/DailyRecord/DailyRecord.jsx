@@ -6,6 +6,7 @@ import Table from "../../components/Table";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 const getProfileUrl = (id) => `${SERVER_URL}/profile/${id}`;
 
@@ -16,6 +17,7 @@ const NEW_SERVICE_TEXT = "Nuevo servicio";
 export default function DailyRecord() {
   const { profileId } = useParams();
   const [profileData, setProfileData] = useState(null);
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     const getData = async () => {
@@ -35,7 +37,14 @@ export default function DailyRecord() {
 
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
 
+  const showModalHandler = (value) => {
+    setIsVisible((prevState) => value || !prevState);
+  };
+
   return (
+
+    <>
+    <Modal isVisible={isVisible} showModalHandler={showModalHandler}>{"this is modal content test"}</Modal>
     <section className="dailyrecord__container">
       <Avatar textComponent={avatarName} />
       <Text element="h1">{DAILY_RECORD_TEXT}</Text>
@@ -50,5 +59,6 @@ export default function DailyRecord() {
         </Button>
       </section>
     </section>
+    </>
   );
 }
