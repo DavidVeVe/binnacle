@@ -2,17 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import Avatar from "../../components/Avatar/Avatar";
 import Text from "../../components/Text";
-import { getSingleProfile } from "../../requestHandlers/profiles";
+import { SERVER_URL } from "../../common/constants/profile";
 import "./home.scss";
-
-const SERVER_URL = "http://localhost:3000";
 
 export default function Home() {
   const [homeProfiles, setHomeProfiles] = useState([]);
-
-  const avatarClickHandler = async () => {
-    await getSingleProfile(SERVER_URL);
-  };
 
   useEffect(() => {
     const getProfiles = async () => {
@@ -30,11 +24,7 @@ export default function Home() {
   const AvatarComponents = homeProfiles?.map(({ id, name }) => {
     return (
       <Link to={`/profile/${id}`} key={id}>
-        <Avatar
-          onClick={avatarClickHandler}
-          profileId={id}
-          textComponent={<Text element="span">{name}</Text>}
-        />
+        <Avatar textComponent={<Text element="span">{name}</Text>} />
       </Link>
     );
   });

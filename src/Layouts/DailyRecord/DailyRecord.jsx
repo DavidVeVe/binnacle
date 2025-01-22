@@ -1,15 +1,22 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getSingleProfile } from "../../requestHandlers/profiles";
 import Table from "../../components/Table";
-import { useContext } from "react";
-import { ProfilesContext } from "../../App";
+import { SERVER_URL } from "../../common/constants/profile";
 
-const DailyRecord = () => {
-  const profile = useContext(ProfilesContext);
-  console.log(profile);
+export default function DailyRecord() {
   const { profileId } = useParams();
-  console.log(getSingleProfile);
-  return <Table></Table>;
-};
+  const [profileData, setProfileData] = useState(null);
 
-export default DailyRecord;
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getSingleProfile(
+        `${SERVER_URL}/profile/${profileId}`
+      );
+      setProfileData(response.data);
+    };
+    getData();
+  }, []);
+
+  return <Table data={profileData?.currentServices || []} />;
+}

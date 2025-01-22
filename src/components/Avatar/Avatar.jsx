@@ -1,9 +1,9 @@
 import AvatarImage from "../../assets/woman.png";
 import "./avatar.scss";
 
-export default function Avatar({ onClick, profileId, textComponent }) {
+export default function Avatar({ textComponent }) {
   return (
-    <div onClick={onClick} className="avatar">
+    <div className="avatar">
       <figure className="avatar__image-wrapper">
         <img src={AvatarImage} />
       </figure>
