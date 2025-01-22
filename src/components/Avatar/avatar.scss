@@ -2,25 +2,20 @@
     width: 55px;
     height: 55px;
     cursor: pointer;
-    transition: .5s;
     margin: 32px;
 
-    &:hover {
-        transform: scale(1.1);
-        transition: .5s;
-    }
-
+    
     &__image-wrapper {
         width: inherit;
         height: inherit;
         margin: 0;
-
+        
         & img {
             width: inherit;
             height: inherit;
         }
     }
-
+    
     & .title {
         color: white;
         margin: 26px 0;
