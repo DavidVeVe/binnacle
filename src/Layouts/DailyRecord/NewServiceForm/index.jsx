@@ -13,18 +13,23 @@ export default function NewServiceForm({ showModalHandler }) {
     minutes: 0
   });
 
+  console.log(state);
+
   const startServiceHandler = (e) => {
     e.preventDefault();
-    console.log("start new service");
+
+    dispatch({
+      type: "startService",
+      payload: { minutes: state.minutes, hours: state.hours }
+    });
   };
 
   const cancelNewService = (e) => {
     e.preventDefault();
-    console.log("cancel new service");
+    showModalHandler();
   };
 
   const onInputChangeHandler = (e, type) => {
-    console.log;
     dispatch({ type, payload: e.target.value });
   };
 

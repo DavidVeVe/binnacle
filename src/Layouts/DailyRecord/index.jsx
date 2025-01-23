@@ -41,11 +41,8 @@ export default function DailyRecord() {
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
 
   const showModalHandler = (event, value) => {
-    event.stopPropagation();
     setIsModalVisible((prevState) => value || !prevState);
   };
-
-  console.log(profileData?.currentServices);
 
   const DailyRecordContent =
     profileData?.currentServices.length > 0 ? (

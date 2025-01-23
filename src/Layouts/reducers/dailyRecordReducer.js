@@ -6,7 +6,11 @@ const newServiceFormReducer = (state, action) => {
     case "minutes":
       return { ...state, minutes: action.payload };
     case "startService":
-      return { ...state, minutes: action.payload };
+      return {
+        ...state,
+        minutes: action.payload.minutes,
+        hours: action.payload.hours
+      };
     case "cancel":
       return { hours: 0, minutes: 0 };
     default:
