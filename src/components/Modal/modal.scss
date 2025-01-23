@@ -1,5 +1,10 @@
-@import "../../style/layout.scss";
+@import "../../style/_layout.scss";
+@import "../../style/colors";
 
 .modal__container {
+    padding: 50px;
+    background-color: $base-color;
+    border-radius: 10px;
     @include flex-center-content;
+
 }
