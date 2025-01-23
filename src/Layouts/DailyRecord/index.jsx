@@ -17,7 +17,7 @@ const NEW_SERVICE_TEXT = "Nuevo servicio";
 export default function DailyRecord() {
   const { profileId } = useParams();
   const [profileData, setProfileData] = useState(null);
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -27,8 +27,8 @@ export default function DailyRecord() {
     getData();
   }, []);
 
-  const newServiceHandler = () => {
-    console.log("new service handler");
+  const newServiceBtnHandler = () => {
+    setIsModalVisible((prevState) => !prevState)
   };
 
   const cashoutHandler = () => {
@@ -37,28 +37,30 @@ export default function DailyRecord() {
 
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
 
-  const showModalHandler = (value) => {
-    setIsVisible((prevState) => value || !prevState);
+  const showModalHandler = (event, value) => {
+    setIsModalVisible((prevState) => value || !prevState);
   };
 
+
   return (
-
     <>
-    <Modal isVisible={isVisible} showModalHandler={showModalHandler}>{"this is modal content test"}</Modal>
-    <section className="dailyrecord__container">
-      <Avatar textComponent={avatarName} />
-      <Text element="h1">{DAILY_RECORD_TEXT}</Text>
-      <Table data={profileData?.currentServices || []} />
+      <Modal isVisible={isVisible} showModalHandler={showModalHandler}>
+        {"this is modal content test"}
+      </Modal>
+      <section className="dailyrecord__container">
+        <Avatar textComponent={avatarName} />
+        <Text element="h1">{DAILY_RECORD_TEXT}</Text>
+        <Table data={profileData?.currentServices || []} />
 
-      <section className="dailyrecord__buttons">
-        <Button buttonType="button" onClick={newServiceHandler}>
-          {NEW_SERVICE_TEXT}
-        </Button>
-        <Button buttonType="button" onClick={cashoutHandler}>
-          {CASHOUT_TEXT}
-        </Button>
+        <section className="dailyrecord__buttons">
+          <Button buttonType="button" onClick={newServiceBtnHandler}>
+            {NEW_SERVICE_TEXT}
+          </Button>
+          <Button buttonType="button" onClick={cashoutHandler}>
+            {CASHOUT_TEXT}
+          </Button>
+        </section>
       </section>
-    </section>
     </>
   );
 }

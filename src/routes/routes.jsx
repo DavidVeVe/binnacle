@@ -1,5 +1,5 @@
 import Home from "../Layouts/Home/Home";
-import DailyRecord from "../Layouts/DailyRecord/DailyRecord";
+import DailyRecord from "../Layouts/DailyRecord";
 import CashOut from "../Layouts/Cashout/Cashout";
 
 export const routes = Object.freeze([
