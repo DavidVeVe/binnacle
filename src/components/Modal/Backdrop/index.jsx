@@ -1,9 +1,5 @@
-import "./backdrop.scss"
+import "./backdrop.scss";
 
-export default function Backdrop({ children, onClick }) {
-  return (
-    <section className="backdrop" onClick={onClick}>
-      {children}
-    </section>
-  );
+export default function Backdrop({ onClick }) {
+  return <div className="backdrop" onClick={onClick}></div>;
 }

@@ -1,5 +1,3 @@
-@import "../../../style/_layout.scss";
-
 .backdrop {
     position: absolute;
     left: 0;
@@ -7,5 +5,4 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8);
-    @include flex-center-content;
 }
