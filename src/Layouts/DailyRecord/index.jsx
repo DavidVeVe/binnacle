@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getSingleProfile } from "../../requestHandlers/profiles";
 import { SERVER_URL } from "../../common/constants/profile";
 import Table from "../../components/Table";
@@ -14,6 +14,7 @@ const getProfileUrl = (id) => `${SERVER_URL}/profile/${id}`;
 const DAILY_RECORD_TEXT = "Estos son tus servicios de hoy:";
 const CASHOUT_TEXT = "Hacer corte";
 const NEW_SERVICE_TEXT = "Nuevo servicio";
+const HOME = "Inicio";
 
 export default function DailyRecord() {
   const { profileId } = useParams();
@@ -39,7 +40,7 @@ export default function DailyRecord() {
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
 
   const showModalHandler = (event, value) => {
-    console.log("clicked showModalHandler")
+    console.log("clicked showModalHandler");
     event.stopPropagation();
     setIsModalVisible((prevState) => value || !prevState);
   };
@@ -62,6 +63,7 @@ export default function DailyRecord() {
         {"this is modal content test"}
       </Modal>
       <section className="dailyrecord__container">
+        <Link to="/">{HOME}</Link>
         <Avatar textComponent={avatarName} />
 
         {DailyRecordContent}
