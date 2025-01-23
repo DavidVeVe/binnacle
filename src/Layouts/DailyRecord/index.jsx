@@ -7,6 +7,7 @@ import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import FallBackDailyRecord from "./Fallback";
 
 const getProfileUrl = (id) => `${SERVER_URL}/profile/${id}`;
 
@@ -28,7 +29,7 @@ export default function DailyRecord() {
   }, []);
 
   const newServiceBtnHandler = () => {
-    setIsModalVisible((prevState) => !prevState)
+    setIsModalVisible((prevState) => !prevState);
   };
 
   const cashoutHandler = () => {
@@ -41,6 +42,17 @@ export default function DailyRecord() {
     setIsModalVisible((prevState) => value || !prevState);
   };
 
+  console.log(profileData?.currentServices);
+
+  const DailyRecordContent =
+    profileData?.currentServices.length > 0 ? (
+      <>
+        <Text element="h1">{DAILY_RECORD_TEXT}</Text>
+        <Table data={profileData?.currentServices || []} />
+      </>
+    ) : (
+      <FallBackDailyRecord />
+    );
 
   return (
     <>
@@ -49,8 +61,8 @@ export default function DailyRecord() {
       </Modal>
       <section className="dailyrecord__container">
         <Avatar textComponent={avatarName} />
-        <Text element="h1">{DAILY_RECORD_TEXT}</Text>
-        <Table data={profileData?.currentServices || []} />
+
+        {DailyRecordContent}
 
         <section className="dailyrecord__buttons">
           <Button buttonType="button" onClick={newServiceBtnHandler}>
