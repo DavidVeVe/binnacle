@@ -2,14 +2,10 @@
 @import "../../style/colors";
 
 .modal__container {
+    padding: 50px;
+    background-color: $base-color;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1000;
     @include flex-center-content;
-    height: 100vh;
-
-    &-content {
-        padding: 50px;
-        background-color: $base-color;
-        border-radius: 10px;
-        position: relative;
-        @include flex-center-content;
-    }
 }
