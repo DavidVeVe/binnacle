@@ -8,6 +8,7 @@ import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import FallBackDailyRecord from "./Fallback";
+import NewServiceForm from "./NewServiceForm";
 
 const getProfileUrl = (id) => `${SERVER_URL}/profile/${id}`;
 
@@ -19,7 +20,7 @@ const HOME = "Inicio";
 export default function DailyRecord() {
   const { profileId } = useParams();
   const [profileData, setProfileData] = useState(null);
-  const [isVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -40,7 +41,6 @@ export default function DailyRecord() {
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;
 
   const showModalHandler = (event, value) => {
-    console.log("clicked showModalHandler");
     event.stopPropagation();
     setIsModalVisible((prevState) => value || !prevState);
   };
@@ -57,26 +57,34 @@ export default function DailyRecord() {
       <FallBackDailyRecord />
     );
 
+  const ModalComponent = (
+    <Modal isModalVisible={isModalVisible} showModalHandler={showModalHandler}>
+      <NewServiceForm showModalHandler={showModalHandler} />
+    </Modal>
+  );
+
+  const MainContent = (
+    <section className="dailyrecord__container">
+      <Link to="/">{HOME}</Link>
+      <Avatar textComponent={avatarName} />
+
+      {DailyRecordContent}
+
+      <section className="dailyrecord__buttons">
+        <Button buttonType="button" onClick={newServiceBtnHandler}>
+          {NEW_SERVICE_TEXT}
+        </Button>
+        <Button buttonType="button" onClick={cashoutHandler}>
+          {CASHOUT_TEXT}
+        </Button>
+      </section>
+    </section>
+  );
+
   return (
     <>
-      <Modal isVisible={isVisible} showModalHandler={showModalHandler}>
-        {"this is modal content test"}
-      </Modal>
-      <section className="dailyrecord__container">
-        <Link to="/">{HOME}</Link>
-        <Avatar textComponent={avatarName} />
-
-        {DailyRecordContent}
-
-        <section className="dailyrecord__buttons">
-          <Button buttonType="button" onClick={newServiceBtnHandler}>
-            {NEW_SERVICE_TEXT}
-          </Button>
-          <Button buttonType="button" onClick={cashoutHandler}>
-            {CASHOUT_TEXT}
-          </Button>
-        </section>
-      </section>
+      {ModalComponent}
+      {MainContent}
     </>
   );
 }

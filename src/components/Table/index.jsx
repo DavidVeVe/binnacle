@@ -22,7 +22,7 @@ export default function Table({ data }) {
 
   const getTableBody = (data) => {
     return data.map((itemData) => {
-      return <Row>{getTableContent(itemData)}</Row>;
+      return <Row key={Math.random()}>{getTableContent(itemData)}</Row>;
     });
   };
 

@@ -1,12 +1,12 @@
 import Backdrop from "./Backdrop";
 import "./modal.scss";
 
-export default function Modal({ children, isVisible, showModalHandler }) {
+export default function Modal({ children, isModalVisible, showModalHandler }) {
   return (
     <>
-      {isVisible && (
+      {isModalVisible && (
         <>
-          <Backdrop onClick={showModalHandler} isVisible={isVisible} />
+          <Backdrop onClick={showModalHandler} />
           <section className="modal__container">{children}</section>
         </>
       )}
