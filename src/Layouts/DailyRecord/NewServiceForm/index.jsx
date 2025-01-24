@@ -3,24 +3,45 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
 import { newServiceFormReducer } from "../../reducers/dailyRecordReducer";
+import { SERVER_URL } from "../../../common/constants/profile";
+import { useParams } from "react-router";
 
 const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";
+const getSddServiceOptions = (data) => {
+  return {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+};
 
 export default function NewServiceForm({ showModalHandler }) {
-  const [state, dispatch] = useReducer(newServiceFormReducer, {
+  const { profileId } = useParams();
+  const [serviceHoursState, dispatch] = useReducer(newServiceFormReducer, {
     hours: 0,
     minutes: 0
   });
 
-  console.log(state);
-
-  const startServiceHandler = (e) => {
+  const startServiceHandler = async (e) => {
     e.preventDefault();
+    console.log("clicked");
+
+    const response = await fetch(
+      `${SERVER_URL}/profile/${profileId}/addService`,
+      getSddServiceOptions({ id: profileId, data: serviceHoursState })
+    );
+
+    console.log(await response.json());
 
     dispatch({
       type: "startService",
-      payload: { minutes: state.minutes, hours: state.hours }
+      payload: {
+        minutes: serviceHoursState.minutes,
+        hours: serviceHoursState.hours
+      }
     });
   };
 
@@ -41,7 +62,7 @@ export default function NewServiceForm({ showModalHandler }) {
           type="number"
           id="hours"
           name="hours"
-          value={state.hours}
+          value={serviceHoursState.hours}
           onChange={(e) => onInputChangeHandler(e, "hours")}
         />
         <Label>{"Minutos"}</Label>
@@ -49,7 +70,7 @@ export default function NewServiceForm({ showModalHandler }) {
           type="number"
           id="minutes"
           name="minutes"
-          value={state.minutes}
+          value={serviceHoursState.minutes}
           onChange={(e) => onInputChangeHandler(e, "minutes")}
         />
       </section>

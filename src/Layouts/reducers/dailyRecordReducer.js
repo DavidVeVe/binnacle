@@ -1,5 +1,4 @@
 const newServiceFormReducer = (state, action) => {
-  console.log(state, action);
   switch (action.type) {
     case "hours":
       return { ...state, hours: action.payload };

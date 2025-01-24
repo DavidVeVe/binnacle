@@ -56,7 +56,7 @@ export default function DailyRecord() {
 
   const ModalComponent = (
     <Modal isModalVisible={isModalVisible} showModalHandler={showModalHandler}>
-      <NewServiceForm showModalHandler={showModalHandler} />
+      <NewServiceForm showModalHandler={showModalHandler} profileId />
     </Modal>
   );
 
