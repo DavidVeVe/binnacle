@@ -35,7 +35,7 @@ export default function DailyRecord() {
   };
 
   const cashoutHandler = () => {
-    console.log("cash out handler");
+    // console.log("cash out handler");``
   };
 
   const avatarName = <Text element="span">{profileData?.name || ""}</Text>;

@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 
 const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";
+
 const getSddServiceOptions = (data) => {
   return {
     method: "POST",
@@ -16,6 +17,12 @@ const getSddServiceOptions = (data) => {
       "Content-Type": "application/json"
     }
   };
+};
+
+const getEndTime = (startTime, hours, minutes) => {
+  const defaultHourMilisecond = 3600000;
+  const realHoursMiliseconds = (hours + minutes / 60) * defaultHourMilisecond;
+  return startTime + realHoursMiliseconds;
 };
 
 export default function NewServiceForm({ showModalHandler }) {
@@ -27,22 +34,32 @@ export default function NewServiceForm({ showModalHandler }) {
 
   const startServiceHandler = async (e) => {
     e.preventDefault();
-    console.log("clicked");
+    const { hours, minutes } = serviceHoursState;
 
-    const response = await fetch(
-      `${SERVER_URL}/profile/${profileId}/addService`,
-      getSddServiceOptions({ id: profileId, data: serviceHoursState })
-    );
+    const today = new Date();
+    today.setTime(today.getTime());
 
-    console.log(await response.json());
+    const endTime = getEndTime(today.getTime(), +hours, +minutes);
 
     dispatch({
       type: "startService",
       payload: {
-        minutes: serviceHoursState.minutes,
-        hours: serviceHoursState.hours
+        minutes: +minutes,
+        hours: +hours
       }
     });
+
+    const bodyObj = {
+      ...serviceHoursState,
+      date: today,
+      startTime: today.getTime(),
+      endTime
+    };
+
+    const response = await fetch(
+      `${SERVER_URL}/profile/${profileId}/addService`,
+      getSddServiceOptions({ id: profileId, data: bodyObj })
+    );
   };
 
   const cancelNewService = (e) => {

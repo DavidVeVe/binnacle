@@ -1,4 +1,5 @@
 const newServiceFormReducer = (state, action) => {
+  const { minutes, hours } = action.payload;
   switch (action.type) {
     case "hours":
       return { ...state, hours: action.payload };
@@ -7,8 +8,8 @@ const newServiceFormReducer = (state, action) => {
     case "startService":
       return {
         ...state,
-        minutes: action.payload.minutes,
-        hours: action.payload.hours
+        minutes,
+        hours
       };
     case "cancel":
       return { hours: 0, minutes: 0 };
