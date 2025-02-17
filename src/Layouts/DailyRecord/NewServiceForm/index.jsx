@@ -2,65 +2,17 @@ import { useReducer } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
-import { newServiceFormReducer } from "../../reducers/dailyRecordReducer";
-import { SERVER_URL } from "../../../common/constants/profile";
-import { useParams } from "react-router";
 
 const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";
 
-const getSddServiceOptions = (data) => {
-  return {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-};
-
-const getEndTime = (startTime, hours, minutes) => {
-  const defaultHourMilisecond = 3600000;
-  const realHoursMiliseconds = (hours + minutes / 60) * defaultHourMilisecond;
-  return startTime + realHoursMiliseconds;
-};
-
-export default function NewServiceForm({ showModalHandler }) {
-  const { profileId } = useParams();
-  const [serviceHoursState, dispatch] = useReducer(newServiceFormReducer, {
-    hours: 0,
-    minutes: 0
-  });
-
-  const startServiceHandler = async (e) => {
-    e.preventDefault();
-    const { hours, minutes } = serviceHoursState;
-
-    const today = new Date();
-    today.setTime(today.getTime());
-
-    const endTime = getEndTime(today.getTime(), +hours, +minutes);
-
-    dispatch({
-      type: "startService",
-      payload: {
-        minutes: +minutes,
-        hours: +hours
-      }
-    });
-
-    const bodyObj = {
-      ...serviceHoursState,
-      date: today,
-      startTime: today.getTime(),
-      endTime
-    };
-
-    const response = await fetch(
-      `${SERVER_URL}/profile/${profileId}/addService`,
-      getSddServiceOptions({ id: profileId, data: bodyObj })
-    );
-  };
+export default function NewServiceForm({
+  showModalHandler,
+  serviceTime,
+  startServiceHandler,
+  dispatchInputHandler
+}) {
+  const { hours, minutes } = serviceTime;
 
   const cancelNewService = (e) => {
     e.preventDefault();
@@ -68,7 +20,7 @@ export default function NewServiceForm({ showModalHandler }) {
   };
 
   const onInputChangeHandler = (e, type) => {
-    dispatch({ type, payload: e.target.value });
+    dispatchInputHandler({ type, payload: +e.target.value });
   };
 
   return (
@@ -79,7 +31,7 @@ export default function NewServiceForm({ showModalHandler }) {
           type="number"
           id="hours"
           name="hours"
-          value={serviceHoursState.hours}
+          value={hours}
           onChange={(e) => onInputChangeHandler(e, "hours")}
         />
         <Label>{"Minutos"}</Label>
@@ -87,7 +39,7 @@ export default function NewServiceForm({ showModalHandler }) {
           type="number"
           id="minutes"
           name="minutes"
-          value={serviceHoursState.minutes}
+          value={minutes}
           onChange={(e) => onInputChangeHandler(e, "minutes")}
         />
       </section>
