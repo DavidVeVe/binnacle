@@ -5,9 +5,9 @@ const serviceTimerCB = (prev) => {
   if (seconds > 0)
     return { hours: hours, minutes: minutes, seconds: seconds - 1 };
   if (seconds === 0 && minutes > 0)
-    return { hours: hours, minutes: minutes - 1, seconds: 2 };
+    return { hours: hours, minutes: minutes - 1, seconds: 60 };
   if (minutes === 0 && hours > 0)
-    return { hours: hours - 1, minutes: 2, seconds: 2 };
+    return { hours: hours - 1, minutes: 60, seconds: 60 };
 };
 
 const getTimerIntervalCondition = (serviceTimerState) => {

@@ -33,11 +33,20 @@ export default function DailyRecord() {
   const { profileId } = useParams();
   const [profileData, setProfileData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [view, setView] = useState("record");
-  const [serviceHoursState, dispatch] = useReducer(newServiceFormReducer, {
-    hours: 0,
-    minutes: 0
+  const [uiState, setUiState] = useState({
+    isLoading: false,
+    error: false
   });
+  const [newService, dispatch] = useReducer(newServiceFormReducer, {
+    hours: 0,
+    minutes: 0,
+    room: 0,
+    view: "record"
+  });
+
+  const setViewCB = (value) => {
+    dispatch({ type: "changeView", payload: value });
+  };
 
   const startServiceHandler = async (e) => {
     e.preventDefault();
@@ -46,7 +55,7 @@ export default function DailyRecord() {
     today.setTime(today.getTime());
 
     const bodyObj = {
-      ...serviceHoursState,
+      ...newService,
       date: today,
       startTime: today.getTime()
     };
@@ -58,16 +67,24 @@ export default function DailyRecord() {
       );
 
       if (response.ok) {
-        dispatch({
-          type: "startService",
-          payload: {
-            minutes: +minutes,
-            hours: +hours,
-            endTime: response.endTime
-          }
-        });
-        showModalHandler();
-        setView("timer");
+        if (newService.minutes > 0 || newService.hours > 0) {
+          dispatch({
+            type: "startService",
+            payload: {
+              minutes: newService.minutes,
+              hours: newService.hours,
+              endTime: response.endTime,
+              view: "timer"
+            }
+          });
+          showModalHandler();
+        } else {
+          setUiState((prev) => ({
+            ...prev,
+            error: true,
+            errorType: "formValues"
+          }));
+        }
       }
     } catch (error) {
       console.log(error);
@@ -110,13 +127,14 @@ export default function DailyRecord() {
     <Modal isModalVisible={isModalVisible} showModalHandler={showModalHandler}>
       <NewServiceForm
         showModalHandler={showModalHandler}
-        serviceTime={serviceHoursState}
+        newService={newService}
         startServiceHandler={startServiceHandler}
         dispatchInputHandler={dispatch}
+        uiState={uiState}
       />
     </Modal>
   );
-  console.log(serviceHoursState);
+
   const getMainContent = (view) => {
     switch (view) {
       case "record":
@@ -138,16 +156,13 @@ export default function DailyRecord() {
           </section>
         );
       case "timer":
-        // return <TimerLayout setViewCB={setView} serviceTime={} />;
-        return (
-          <TimerLayout setViewCB={setView} serviceTime={serviceHoursState} />
-        );
+        return <TimerLayout setViewCB={setViewCB} newService={newService} />;
       default:
         break;
     }
   };
 
-  const MainContent = getMainContent(view);
+  const MainContent = getMainContent(newService.view);
 
   return (
     <>

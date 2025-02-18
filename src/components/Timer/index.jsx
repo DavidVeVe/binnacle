@@ -7,11 +7,11 @@ import {
 
 const SECOND_UNIT = 1000;
 
-export default function Timer({ serviceTime }) {
+export default function Timer({ newService }) {
   const [serviceTimer, setServiceTimer] = useState({
-    hours: +serviceTime.hours,
-    minutes: +serviceTime.minutes,
-    seconds: 60
+    hours: +newService.hours,
+    minutes: +newService.minutes,
+    seconds: 0
   });
 
   const timerCondition = getTimerIntervalCondition(serviceTimer);

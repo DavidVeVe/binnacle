@@ -1,4 +1,3 @@
-import { useReducer } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
@@ -8,11 +7,12 @@ const CANCEL_NEW_SERVICE = "Cancelar";
 
 export default function NewServiceForm({
   showModalHandler,
-  serviceTime,
+  newService,
   startServiceHandler,
-  dispatchInputHandler
+  dispatchInputHandler,
+  uiState
 }) {
-  const { hours, minutes } = serviceTime;
+  const { hours, minutes, room } = newService;
 
   const cancelNewService = (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export default function NewServiceForm({
   };
 
   const onInputChangeHandler = (e, type) => {
-    dispatchInputHandler({ type, payload: +e.target.value });
+    dispatchInputHandler({ type, payload: e.target.value });
   };
 
   return (
@@ -41,6 +41,14 @@ export default function NewServiceForm({
           name="minutes"
           value={minutes}
           onChange={(e) => onInputChangeHandler(e, "minutes")}
+        />
+        <Label>{"Cuarto"}</Label>
+        <Input
+          type="number"
+          id="room"
+          name="room"
+          value={room}
+          onChange={(e) => onInputChangeHandler(e, "room")}
         />
       </section>
       <section className="new_service_form__buttons">
