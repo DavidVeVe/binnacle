@@ -6,18 +6,13 @@ const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";
 
 export default function NewServiceForm({
-  showModalHandler,
   newService,
   startServiceHandler,
   dispatchInputHandler,
-  uiState
+  uiState,
+  cancelNewService
 }) {
   const { hours, minutes, room } = newService;
-
-  const cancelNewService = (e) => {
-    e.preventDefault();
-    showModalHandler();
-  };
 
   const onInputChangeHandler = (e, type) => {
     dispatchInputHandler({ type, payload: e.target.value });

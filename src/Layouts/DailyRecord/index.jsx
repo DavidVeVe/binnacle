@@ -44,10 +44,6 @@ export default function DailyRecord() {
     view: "record"
   });
 
-  const setViewCB = (value) => {
-    dispatch({ type: "changeView", payload: value });
-  };
-
   const startServiceHandler = async (e) => {
     e.preventDefault();
 
@@ -113,6 +109,15 @@ export default function DailyRecord() {
     setIsModalVisible((prevState) => value || !prevState);
   };
 
+  const endServiceCB = () => {
+    dispatch({ type: "cancel" });
+  };
+
+  const cancelNewService = (e) => {
+    e.preventDefault();
+    showModalHandler();
+  };
+
   const DailyRecordContent =
     profileData?.currentServices.length > 0 ? (
       <>
@@ -126,11 +131,11 @@ export default function DailyRecord() {
   const ModalComponent = (
     <Modal isModalVisible={isModalVisible} showModalHandler={showModalHandler}>
       <NewServiceForm
-        showModalHandler={showModalHandler}
         newService={newService}
         startServiceHandler={startServiceHandler}
         dispatchInputHandler={dispatch}
         uiState={uiState}
+        cancelNewService={cancelNewService}
       />
     </Modal>
   );
@@ -156,7 +161,9 @@ export default function DailyRecord() {
           </section>
         );
       case "timer":
-        return <TimerLayout setViewCB={setViewCB} newService={newService} />;
+        return (
+          <TimerLayout endServiceCB={endServiceCB} newService={newService} />
+        );
       default:
         break;
     }
