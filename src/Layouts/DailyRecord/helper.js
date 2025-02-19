@@ -1,3 +1,4 @@
-const ERRORS_MESSAGE = {
-  formValues: "At least one value must be greater than 0"
+export const ERRORS_MESSAGE = {
+  formValues:
+    "Favor de ingresar el rango de tiempo del servicio y el número de habitación."
 };

@@ -1,6 +1,7 @@
 import Button from "../../../components/Button";
 import Input from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
+import { ERRORS_MESSAGE } from "../helper";
 
 const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";
@@ -9,17 +10,18 @@ export default function NewServiceForm({
   newService,
   startServiceHandler,
   dispatchInputHandler,
-  uiState,
   cancelNewService
 }) {
-  const { hours, minutes, room } = newService;
+  const { hours, minutes, room, error } = newService;
 
   const onInputChangeHandler = (e, type) => {
     dispatchInputHandler({ type, payload: e.target.value });
   };
+  const errorMessage = error && ERRORS_MESSAGE[newService.errorType];
 
   return (
     <form>
+      <p>{errorMessage}</p>
       <section className="new_service_form__inputs">
         <Label>{"Horas"}</Label>
         <Input
@@ -37,7 +39,7 @@ export default function NewServiceForm({
           value={minutes}
           onChange={(e) => onInputChangeHandler(e, "minutes")}
         />
-        <Label>{"Cuarto"}</Label>
+        <Label>{"Habitación"}</Label>
         <Input
           type="number"
           id="room"

@@ -1,7 +1,12 @@
-import { defaultTitleSize, validTags } from "./helper";
+import { defaultTitleSize, validTags, getClassNames } from "./helper";
+import "./text.scss";
 
-export default function Text({ children, element }) {
-  let TextComponent = validTags[element] || defaultTitleSize;
+export default function Text({ children, element, isInline }) {
+  console.log(isInline);
+  const TextComponent = validTags[element] || defaultTitleSize;
+  const composedClassNames = getClassNames(isInline);
 
-  return <TextComponent className="title">{children}</TextComponent>;
+  return (
+    <TextComponent className={composedClassNames}>{children}</TextComponent>
+  );
 }

@@ -10,3 +10,7 @@ export const validTags = {
 };
 
 export const defaultTitleSize = "h1";
+
+export const getClassNames = (isInline) => {
+  return isInline ? "text text__isInline" : "text";
+};

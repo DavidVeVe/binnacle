@@ -33,15 +33,14 @@ export default function DailyRecord() {
   const { profileId } = useParams();
   const [profileData, setProfileData] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [uiState, setUiState] = useState({
-    isLoading: false,
-    error: false
-  });
   const [newService, dispatch] = useReducer(newServiceFormReducer, {
     hours: 0,
     minutes: 0,
     room: 0,
-    view: "record"
+    view: "record",
+    error: false,
+    errorType: "",
+    isLoading: false
   });
 
   const startServiceHandler = async (e) => {
@@ -75,11 +74,13 @@ export default function DailyRecord() {
           });
           showModalHandler();
         } else {
-          setUiState((prev) => ({
-            ...prev,
-            error: true,
-            errorType: "formValues"
-          }));
+          dispatch({
+            type: "error",
+            payload: {
+              error: true,
+              errorType: "formValues"
+            }
+          });
         }
       }
     } catch (error) {
@@ -134,7 +135,6 @@ export default function DailyRecord() {
         newService={newService}
         startServiceHandler={startServiceHandler}
         dispatchInputHandler={dispatch}
-        uiState={uiState}
         cancelNewService={cancelNewService}
       />
     </Modal>
@@ -162,7 +162,11 @@ export default function DailyRecord() {
         );
       case "timer":
         return (
-          <TimerLayout endServiceCB={endServiceCB} newService={newService} />
+          <TimerLayout
+            endServiceCB={endServiceCB}
+            newService={newService}
+            profileData={profileData}
+          />
         );
       default:
         break;
