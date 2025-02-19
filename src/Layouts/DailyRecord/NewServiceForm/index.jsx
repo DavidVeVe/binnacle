@@ -1,7 +1,7 @@
 import Button from "../../../components/Button";
 import Input from "../../../components/Form/Input";
 import Label from "../../../components/Form/Label";
-import { ERRORS_MESSAGE } from "../helper";
+import { ERRORS_MESSAGE } from "../../helper";
 
 const START_NEW_SERVICE = "Iniciar servicio";
 const CANCEL_NEW_SERVICE = "Cancelar";

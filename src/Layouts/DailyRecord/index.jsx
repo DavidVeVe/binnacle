@@ -14,7 +14,7 @@ import FallBackDailyRecord from "./Fallback";
 import NewServiceForm from "./NewServiceForm";
 import TimerLayout from "./TimerLayout";
 import { newServiceFormReducer } from "../reducers/dailyRecordReducer";
-import { getCurrentDate } from "./helper";
+import { getCurrentDate } from "../helper";
 
 const DAILY_RECORD_TEXT = "Estos son tus servicios de hoy:";
 const CASHOUT_TEXT = "Hacer corte";

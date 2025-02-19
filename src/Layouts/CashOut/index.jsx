@@ -5,7 +5,7 @@ import {
   getProfileUrl
 } from "../../requestHandlers/profiles";
 import Text from "../../components/Text";
-import { getCurrentDate } from "../DailyRecord/helper";
+import { getCurrentDate } from "../helper";
 
 export default function CashOut() {
   const { profileId } = useParams();
