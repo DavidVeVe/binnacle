@@ -1,10 +1,7 @@
 import { useEffect, useState, useReducer } from "react";
 import { Link, useNavigate, useParams } from "react-router";
-import {
-  getSingleProfile,
-  getProfileUrl,
-  postNewService
-} from "../../requestHandlers/profiles";
+import { getSingleProfile } from "../../requestHandlers/profiles";
+import { postNewService } from "../../requestHandlers/services";
 import Table from "../../components/Table";
 import Text from "../../components/Text";
 import Avatar from "../../components/Avatar";
@@ -39,7 +36,7 @@ export default function DailyRecord() {
   //Retrieve profile data
   useEffect(() => {
     const getData = async () => {
-      const response = await getSingleProfile(getProfileUrl(profileId));
+      const response = await getSingleProfile(profileId);
       setProfileData(response.data);
     };
     getData();

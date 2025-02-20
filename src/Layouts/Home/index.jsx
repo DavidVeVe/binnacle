@@ -10,6 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     const getProfiles = async () => {
+      console.log(SERVER_URL)
       const response = await fetch(SERVER_URL);
       const { data } = await response.json();
 
